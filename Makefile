@@ -1,4 +1,4 @@
-.PHONY: all setup busybox kernel rootfs initramfs run clean help
+.PHONY: all setup busybox kernel rootfs run run-cloud clean help
 
 KERNEL_VERSION := 6.6.16
 KERNEL_DIR := linux-$(KERNEL_VERSION)
@@ -42,6 +42,9 @@ rootfs: busybox
 
 run: rootfs kernel
 	@bash scripts/run.sh
+
+run-cloud: rootfs kernel
+	@bash scripts/run_cloud.sh
 
 clean:
 	@echo "Cleaning build artifacts..."

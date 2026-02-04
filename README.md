@@ -1,4 +1,4 @@
-# BusyBox Linux Build System
+# BusyBox Image
 
 A complete build system for creating a minimal Linux distribution using BusyBox and a custom Linux kernel. This project builds a static BusyBox binary, compiles the Linux kernel, creates a root filesystem, and packages it all into an initramfs that can be booted with QEMU or Cloud Hypervisor.
 
@@ -152,41 +152,6 @@ make clean
 make distclean
 ```
 
-### Running with Different Options
-
-```bash
-# Run with more memory
-qemu-system-x86_64 -m 1G -kernel linux-6.6.16/arch/x86/boot/bzImage -initrd initramfs.cpio.gz -nographic -append "console=ttyS0 root=/dev/ram0"
-
-# Run with graphics
-qemu-system-x86_64 -kernel linux-6.6.16/arch/x86/boot/bzImage -initrd initramfs.cpio.gz -append "console=ttyS0 root=/dev/ram0"
-```
-
-## Troubleshooting
-
-### Kernel Panic: "No working init found"
-
-- Ensure `/init` exists in rootfs and is executable
-- Check that `/bin/sh` symlink points to `/bin/busybox`
-- Verify initramfs was built correctly
-
-### Build Errors
-
-- Run `make distclean` then rebuild
-- Check that all dependencies are installed with `make setup`
-- Ensure sufficient disk space (2GB+ for full build)
-
-### QEMU Issues
-
-- Verify QEMU is installed: `which qemu-system-x86_64`
-
-### Cloud Hypervisor Issues
-
-- Verify Cloud Hypervisor is installed: `which cloud-hypervisor`
-- Check kernel image exists: `ls -la linux-6.6.16/arch/x86/boot/bzImage`
-- Check initramfs exists: `ls -la initramfs.cpio.gz`
-- Ensure proper permissions: Cloud Hypervisor may need KVM access
-
 ## Customization
 
 ### Adding Files to Rootfs
@@ -218,22 +183,6 @@ Edit `scripts/build_kernel.sh` to use a custom config:
 cp myconfig linux-6.6.16/.config
 make -C linux-6.6.16 olddefconfig
 ```
-
-## License
-
-This project follows the licenses of its components:
-
-- BusyBox: GPL v2
-- Linux Kernel: GPL v2
-- Build scripts: MIT
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test with `make clean && make all && make run`
-5. Submit a pull request
 
 ## Resources
 

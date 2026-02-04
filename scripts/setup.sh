@@ -43,4 +43,7 @@ sudo apt install -y \
   wget \
   curl
 
+sudo apt-get update
+sudo apt-get install -y linux-headers-generic flex
+
 echo "All dependencies installed successfully"
